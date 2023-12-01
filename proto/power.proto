@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package your_package_name;
+
+message Power {
+  int32 id = 1;
+  string power = 2;
+}
+
+service PowerService {
+  rpc CreatePower(CreatePowerdto) returns (Power);
+  rpc RemovePower(RemovePowerdto) returns (RemovePowerResponse);
+}
+
+message CreatePowerdto {
+  string power = 1;
+}
+
+message RemovePowerdto {
+  int32 id = 1;
+}
+
+message RemovePowerResponse {
+  string message = 1;
+}
