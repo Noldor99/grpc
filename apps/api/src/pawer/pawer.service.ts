@@ -1,26 +1,28 @@
-import { Injectable } from '@nestjs/common';
-import { CreatePawerDto } from './dto/create-pawer.dto';
-import { UpdatePawerDto } from './dto/update-pawer.dto';
+import {
+  CreatePowerdto,
+  PowerServiceClient,
+  POWER_SERVICE_NAME,
+} from '@app/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientGrpc } from '@nestjs/microservices';
+import { POWER_SERVICE } from '../constant/constants';
 
 @Injectable()
 export class PawerService {
-  create(createPawerDto: CreatePawerDto) {
-    return 'This action adds a new pawer';
+  private powerService: PowerServiceClient;
+
+  constructor(@Inject(POWER_SERVICE) private client: ClientGrpc) {}
+
+  onModuleInit() {
+    this.powerService =
+      this.client.getService<PowerServiceClient>(POWER_SERVICE_NAME);
   }
 
-  findAll() {
-    return `This action returns all pawer`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} pawer`;
-  }
-
-  update(id: number, updatePawerDto: UpdatePawerDto) {
-    return `This action updates a #${id} pawer`;
+  create(createPawerDto: CreatePowerdto) {
+    return this.powerService.createPower(createPawerDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} pawer`;
+    return this.powerService.removePower({ id });
   }
 }

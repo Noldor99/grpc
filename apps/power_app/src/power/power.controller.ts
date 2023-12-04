@@ -1,34 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { PowerService } from './power.service';
-import { CreatePowerDto } from './dto/create-power.dto';
-import { UpdatePowerDto } from './dto/update-power.dto';
+
+import {
+  CreatePowerdto,
+  PowerServiceController,
+  PowerServiceControllerMethods,
+  RemovePowerdto,
+  RemovePowerResponse,
+} from '@app/common';
 
 @Controller('power')
-export class PowerController {
+@PowerServiceControllerMethods()
+export class PowerController implements PowerServiceController {
   constructor(private readonly powerService: PowerService) {}
 
-  @Post()
-  create(@Body() createPowerDto: CreatePowerDto) {
+  createPower(createPowerDto: CreatePowerdto) {
     return this.powerService.create(createPowerDto);
   }
 
-  @Get()
-  findAll() {
-    return this.powerService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.powerService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePowerDto: UpdatePowerDto) {
-    return this.powerService.update(+id, updatePowerDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.powerService.remove(+id);
+  async removePower(
+    removePowerdto: RemovePowerdto,
+  ): Promise<RemovePowerResponse> {
+    const result = await this.powerService.remove(removePowerdto.id);
+    return { message: result.message };
   }
 }

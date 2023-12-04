@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package your_package_name;
+package power;
 
 message Power {
   int32 id = 1;

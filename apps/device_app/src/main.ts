@@ -1,13 +1,13 @@
 import { POWER_PACKAGE_NAME } from '@app/common';
+import { DEVICE_PACKAGE_NAME } from '@app/common/types/device';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import * as path from 'path';
-
-import { PowerModule } from './power/power.module';
+import { DeviceModule } from './device/device.module';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    PowerModule,
+    DeviceModule,
     {
       transport: Transport.GRPC,
       options: {
@@ -18,9 +18,9 @@ async function bootstrap() {
           '..',
           '..',
           'proto',
-          'power.proto',
+          'device.proto',
         ),
-        package: POWER_PACKAGE_NAME,
+        package: DEVICE_PACKAGE_NAME,
       },
     },
   );

@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePowerDto } from './dto/create-power.dto';
-import { UpdatePowerDto } from './dto/update-power.dto';
+import { CreatePowerdto } from '@app/common';
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class PowerService {
-  create(createPowerDto: CreatePowerDto) {
-    return 'This action adds a new power';
+  constructor(private readonly prismaService: PrismaService) {}
+
+  create(createPowerDto: CreatePowerdto) {
+    const { power } = createPowerDto;
+    return this.prismaService.power.create({
+      data: { power },
+    });
   }
 
-  findAll() {
-    return `This action returns all power`;
-  }
+  async remove(id: number) {
+    const existingPower = await this.prismaService.power.findUnique({
+      where: { id },
+    });
 
-  findOne(id: number) {
-    return `This action returns a #${id} power`;
-  }
+    if (!existingPower) {
+      return { message: `Power with ID ${id} not found` };
+    }
 
-  update(id: number, updatePowerDto: UpdatePowerDto) {
-    return `This action updates a #${id} power`;
-  }
+    await this.prismaService.power.delete({
+      where: { id },
+    });
 
-  remove(id: number) {
-    return `This action removes a #${id} power`;
+    return { message: 'Power removed successfully' };
   }
 }

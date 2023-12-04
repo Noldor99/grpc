@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { PowerModule } from './power/power.module';
+import { DeviceModule } from './device/device.module';
 
 @Module({
-  imports: [PowerModule],
+  imports: [DeviceModule],
   controllers: [],
   providers: [],
 })

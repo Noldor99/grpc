@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package device;
+
+message Device {
+  string name = 1;
+  int32 price = 2;
+  int32 rating = 3;
+  int64 createdAt = 4;
+  int64 updatedAt = 5;
+}
+
+message CreateDeviceRequest {
+  string name = 1;
+  double price = 2;
+  double rating = 3;
+}
+
+message CreateDeviceResponse {
+  string message = 1;
+}
+
+message RemoveDeviceRequest {
+  int32 id = 1;
+}
+
+message RemoveDeviceResponse {
+  string message = 1;
+}
+
+service DeviceService {
+  rpc CreateDevice (CreateDeviceRequest) returns (Device);
+  rpc RemoveDevice (RemoveDeviceRequest) returns (RemoveDeviceResponse);
+}
