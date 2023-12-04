@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -20,4 +19,22 @@ model Device {
   rating    Int       @default(0)
   createdAt DateTime  @default(now()) @map(name: "createdAt")
   updatedAt DateTime  @default(now()) @map(name: "updatedAt")
+
+  brand Brand? @relation(fields: [brandId], references: [id])
+  brandId Int?     
+
+  type Type? @relation(fields: [typeId], references: [id])
+  typeId Int?  
+}
+
+model Brand {
+  id     Int      @id @default(autoincrement())
+  name   String   @unique
+  devices Device[]
+}
+
+model Type {
+  id     Int      @id @default(autoincrement())
+  name   String   @unique
+  devices Device[]
 }

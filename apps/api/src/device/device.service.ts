@@ -6,10 +6,11 @@ import {
 import { ClientGrpc } from '@nestjs/microservices';
 
 import {
+  CreateDeviceRequest,
   DeviceServiceClient,
   DEVICE_SERVICE_NAME,
+  RemoveDeviceRequest,
 } from '@app/common/types/device';
-import { CreateDeviceRequest, RemoveDeviceRequest } from 'proto/device';
 import { DEVICE_SERVICE } from '../constant/constants';
 
 @Injectable()

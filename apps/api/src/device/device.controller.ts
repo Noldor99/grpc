@@ -1,4 +1,3 @@
-import { CreateDeviceRequest } from '@app/common/types/device';
 import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { DeviceService } from './device.service';

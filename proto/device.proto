@@ -6,14 +6,33 @@ message Device {
   string name = 1;
   int32 price = 2;
   int32 rating = 3;
-  int64 createdAt = 4;
+  int64 createdAt = 4; 
   int64 updatedAt = 5;
+  oneof optionalParams {
+    int32 brandId = 6;
+    int32 typeId = 7;
+  }
+}
+
+
+message Brand {
+  int32 id = 1;
+  string name = 2;
+}
+
+message Type {
+  int32 id = 1;
+  string name = 2;
 }
 
 message CreateDeviceRequest {
   string name = 1;
   double price = 2;
   double rating = 3;
+  oneof optionalParams {
+    int32 brandId = 4;
+    int32 typeId = 5;
+  }
 }
 
 message CreateDeviceResponse {
@@ -31,4 +50,43 @@ message RemoveDeviceResponse {
 service DeviceService {
   rpc CreateDevice (CreateDeviceRequest) returns (Device);
   rpc RemoveDevice (RemoveDeviceRequest) returns (RemoveDeviceResponse);
+}
+
+message CreateBrandRequest {
+  string name = 1;
+}
+
+message GetBrandByIdRequest {
+  int32 id = 1;
+}
+
+message RemoveBrandRequest {
+  int32 id = 1;
+}
+
+message RemoveBrandResponse {
+  string message = 1;
+}
+
+service BrandService {
+  rpc CreateBrand (CreateBrandRequest) returns (Brand);
+  rpc GetBrandById (GetBrandByIdRequest) returns (Brand);
+  rpc RemoveBrand (RemoveBrandRequest) returns (RemoveBrandResponse);
+}
+
+message CreateTypeRequest {
+  string name = 1;
+}
+
+message RemoveTypeRequest {
+  int32 id = 1;
+}
+
+message RemoveTypeResponse {
+  string message = 1;
+}
+
+service TypeService {
+  rpc CreateType (CreateTypeRequest) returns (Type);
+  rpc RemoveType (RemoveTypeRequest) returns (RemoveTypeResponse);
 }

@@ -7,14 +7,28 @@ export class DeviceService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(createDeviceDto: CreateDeviceRequest): Promise<Device> {
-    const { name, price, rating } = createDeviceDto;
+    const { name, price, rating, brandId, typeId } = createDeviceDto;
+
+    const createData: any = {
+      name,
+      price,
+      rating,
+    };
+
+    if (brandId !== undefined) {
+      createData.brand = {
+        connect: { id: brandId },
+      };
+    }
+
+    if (typeId !== undefined) {
+      createData.type = {
+        connect: { id: typeId },
+      };
+    }
 
     return await this.prismaService.device.create({
-      data: {
-        name,
-        price,
-        rating,
-      },
+      data: createData,
     });
   }
 

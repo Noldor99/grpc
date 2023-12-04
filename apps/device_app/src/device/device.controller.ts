@@ -3,10 +3,9 @@ import {
   DeviceServiceController,
   RemoveDeviceRequest,
   Device,
+  CreateDeviceRequest,
 } from '@app/common/types/device';
 import { Controller } from '@nestjs/common';
-import { CreateDeviceRequest } from 'proto/device';
-
 import { DeviceService } from './device.service';
 
 @Controller('device')
